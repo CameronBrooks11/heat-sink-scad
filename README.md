@@ -1,2 +1,3 @@
-# heat-sinks-scad
+# heat-sink-scad
+
 Heat sink models in OpenSCAD.
