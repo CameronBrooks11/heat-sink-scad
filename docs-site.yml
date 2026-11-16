@@ -1,0 +1,3 @@
+title: heat-sink-scad
+description: A parametric straight-fin heat sink in OpenSCAD, sized by its outside dimensions and fin gap
+models: heat_sink.scad
