@@ -106,6 +106,16 @@ def main():
                   f"{len(parts)} fins (want {fins}), each {fin:.3f} mm: {', '.join(f'{w:.3f}' for w in widths[:3])}"
                   + ("..." if len(widths) > 3 else ""))
 
+        # The example: one 25 x 25 x 10 mm sink from the origin.
+        r = subprocess.run([openscad, "--hardwarnings", "--export-format", "binstl", "-o", out,
+                            os.path.join(ROOT, "examples", "chip_sink.scad")], capture_output=True, text=True)
+        bad = [l for l in r.stderr.splitlines() if "WARNING" in l or "ERROR" in l]
+        parts = solids(out) if r.returncode == 0 and not bad else []
+        ok = len(parts) == 1 and all(close(v, 0) for v in parts[0][0]) \
+            and all(close(a, b) for a, b in zip(parts[0][1], (25, 25, 10)))
+        check("examples/chip_sink.scad", ok, f"{len(parts)} solid(s), up to {parts[0][1]}" if parts
+              else bad[:1] or f"exit {r.returncode}")
+
         for label, args, message in [
             ("refuses fins that don't fit", "40, 10, 20, 3, 2, 6", "leave no room for the fins"),
             ("refuses a fin count that isn't whole", "40, 40, 20, 3, 2, 2.5", "num_fins has to be a whole number"),

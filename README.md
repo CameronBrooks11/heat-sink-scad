@@ -21,6 +21,7 @@ heat_sink(length = 40, width = 40, height = 20, base_height = 3.2, gap_width = 2
 - `base_height` is the base plate's thickness, `gap_width` the gap between neighbouring fins.
 - `num_fins` fins share what is left of the width once the gaps are taken out:
   `heat_sink_fin_width(width, gap_width, num_fins)` gives each fin's width, and the console echoes it.
+- `examples/chip_sink.scad` builds a 25 mm square sink that way.
 
 It refuses, with a message, a size that can't be made: fins that don't fit the width, a fin count
 that isn't a whole number, a base as tall as the sink, or a negative gap.
@@ -31,9 +32,10 @@ that isn't a whole number, a base as tall as the sink, or a negative gap.
 single fin, it renders each with warnings treated as errors and checks that it's one solid of its
 outside size; then it cuts the sink just above the base plate and checks that the fins come out as
 `num_fins` separate pieces, each as wide as `heat_sink_fin_width` says, spanning the width. It also
-checks the four refusals.
+checks the four refusals, and that the example renders as one 25 x 25 x 10 mm solid.
 
-`just images` renders the picture above.
+`just check` checks the `.scad` files are formatted with [topiary](https://github.com/tweag/topiary)
+0.8.0; `just fmt` formats them. `just images` renders the picture above.
 
 ## Plans
 
